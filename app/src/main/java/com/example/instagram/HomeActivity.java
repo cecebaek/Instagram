@@ -24,12 +24,15 @@ import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private static final String imagePath = "";
     private EditText etDescription;
     private Button btnCreate;
     private Button btnRefresh;
@@ -40,6 +43,7 @@ public class HomeActivity extends AppCompatActivity {
     public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
     public String photoFileName = "photo.jpg";
     File photoFile;
+    File resizedFile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,8 +68,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 final String description = etDescription.getText().toString();
                 final ParseUser user = ParseUser.getCurrentUser();
-
-                final File file = new File(imagePath);
+                final File file = resizedFile;
                 final ParseFile parseFile = new ParseFile(file);
 
                 createPost(description, parseFile, user);
@@ -85,7 +88,7 @@ public class HomeActivity extends AppCompatActivity {
     private void createPost(String description, ParseFile imageFile, ParseUser user) {
         final Post newPost = new Post();
         newPost.setDescription(description);
-//        newPost.setImage(imageFile);
+        newPost.setImage(imageFile);
         newPost.setUser(user);
 
         newPost.saveInBackground(new SaveCallback() {
@@ -105,7 +108,6 @@ public class HomeActivity extends AppCompatActivity {
     private void loadTopPosts() {
         final Post.Query postQuery = new Post.Query();
         postQuery.getTop().withUser();
-
         postQuery.findInBackground(new FindCallback<Post>() {
             @Override
             public void done(List<Post> objects, ParseException e) {
@@ -129,8 +131,6 @@ public class HomeActivity extends AppCompatActivity {
         // Create a File reference to access to future access
         photoFile = getPhotoFileUri(photoFileName);
         // wrap File object into a content provider
-        // required for API >= 24
-        // See https://guides.codepath.com/android/Sharing-Content-with-Intents#sharing-files-with-api-24-or-higher
         Uri fileProvider = FileProvider.getUriForFile(HomeActivity.this, "com.codepath.fileprovider", photoFile);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
         // If you call startActivityForResult() using an intent that no app can handle, your app will crash.
@@ -163,26 +163,39 @@ public class HomeActivity extends AppCompatActivity {
                 // by this point we have the camera photo on disk
                 Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
 
-//                // RESIZE BITMAP, see section below
-//                Uri takenPhotoUri = getPhotoFileUri(photoFileName);
-//                // by this point we have the camera photo on disk
-//                Bitmap rawTakenImage = BitmapFactory.decodeFile(takenPhotoUri.getPath());
-//                // See BitmapScaler.java: https://gist.github.com/nesquena/3885707fd3773c09f1bb
-//                Bitmap resizedBitmap = BitmapScaler.scaleToFitWidth(rawTakenImage, 100);
-//                // Configure byte output stream
-//                ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-//                // Compress the image further
-//                resizedBitmap.compress(Bitmap.CompressFormat.JPEG, 40, bytes);
-//                // Create a new file for the resized bitmap (`getPhotoFileUri` defined above)
-//                File resizedFile = getPhotoFileUri(photoFileName + "_resized");
-//                resizedFile.createNewFile();
-//                FileOutputStream fos = new FileOutputStream(resizedFile);
-//                // Write the bytes of the bitmap to file
-//                fos.write(bytes.toByteArray());
-//                fos.close();
+                // RESIZE BITMAP
+                Bitmap resizedBitmap = BitmapScaler.scaleToFitWidth(takenImage, 200);
+                // Configure byte output stream
+                ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+                // Compress the image further
+                resizedBitmap.compress(Bitmap.CompressFormat.JPEG, 40, bytes);
+                // Create a new file for the resized bitmap (`getPhotoFileUri` defined above)
+                resizedFile = getPhotoFileUri(photoFileName + "_resized");
+                try {
+                    resizedFile.createNewFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                FileOutputStream fos = null;
+                try {
+                    fos = new FileOutputStream(resizedFile);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                // Write the bytes of the bitmap to file
+                try {
+                    fos.write(bytes.toByteArray());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
                 // Load the taken image into a preview
-                ivImagePost.setImageBitmap(takenImage);
+                ivImagePost.setImageBitmap(resizedBitmap);
             } else { // Result was a failure
                 Toast.makeText(this, "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }

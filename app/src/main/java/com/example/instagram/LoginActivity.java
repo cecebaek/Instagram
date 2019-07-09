@@ -13,7 +13,7 @@ import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     // log in view objects
     private EditText usernameInput;
@@ -23,13 +23,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 
         // resolve the view objects
         usernameInput = findViewById(R.id.etUsername);
         passwordInput = findViewById(R.id.etPassword);
         loginBtn = findViewById(R.id.btnLogin);
 
+        // set up on click listener for the log in button
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -39,6 +40,15 @@ public class MainActivity extends AppCompatActivity {
                 login(username, password);
             }
         });
+
+        // keep user logged in on device
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        if (currentUser != null) {
+            Log.d("LoginActivity", "Login successful");
+            final Intent loginIntent = new Intent(LoginActivity.this, HomeActivity.class);
+            startActivity(loginIntent);
+            finish();
+        }
 
 
     }
@@ -50,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
             public void done(ParseUser user, ParseException e) {
                 if (e == null) {
                     Log.d("LoginActivity", "Login successful");
-                    final Intent loginIntent = new Intent(MainActivity.this, HomeActivity.class);
+                    final Intent loginIntent = new Intent(LoginActivity.this, HomeActivity.class);
                     startActivity(loginIntent);
                     finish();
                 }
