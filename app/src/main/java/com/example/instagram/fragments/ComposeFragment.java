@@ -42,7 +42,6 @@ public class ComposeFragment extends Fragment {
 
     private EditText etDescription;
     private Button btnCreate;
-    private Button btnRefresh;
     private Button btnTakePic;
     private ImageView ivImagePost;
 
@@ -68,7 +67,6 @@ public class ComposeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         etDescription = view.findViewById(R.id.etDescription);
         btnCreate = view.findViewById(R.id.btnCreate);
-        btnRefresh = view.findViewById(R.id.btnRefresh);
         btnTakePic = view.findViewById(R.id.btnTakePic);
         ivImagePost = view.findViewById(R.id.ivImagePost);
 
@@ -90,13 +88,6 @@ public class ComposeFragment extends Fragment {
                 createPost(description, parseFile, user);
             }
         });
-
-//        btnRefresh.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                loadTopPosts();
-//            }
-//        });
     }
 
     public void onLaunchCamera(View view) {
@@ -138,7 +129,7 @@ public class ComposeFragment extends Fragment {
                 Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
 
                 // RESIZE BITMAP
-                Bitmap resizedBitmap = BitmapScaler.scaleToFitWidth(takenImage, 200);
+                Bitmap resizedBitmap = BitmapScaler.scaleToFitWidth(takenImage, 250);
                 // Configure byte output stream
                 ByteArrayOutputStream bytes = new ByteArrayOutputStream();
                 // Compress the image further
