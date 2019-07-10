@@ -80,16 +80,11 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                 // get the movie at the position, this won't work if the class is static
                 Post post = posts.get(position);
                 // create intent for the new activity
-//                Intent intent = new Intent(context, PostDetailActivity.class);
-//                // serialize the movie using parceler, use its short name as a key
-//                intent.putExtra(Movie.class.getSimpleName(), Parcels.wrap(post));
-//                // show the activity
-//                context.startActivity(intent);
-                Intent sendPostDetails = new Intent(context, PostDetailActivity.class);
-                sendPostDetails.putExtra("username", post.getUser().getUsername());
-                sendPostDetails.putExtra("createdAt", post.getCreatedAt().toString());
-                sendPostDetails.putExtra("description", post.getDescription());
-                context.startActivity(sendPostDetails);
+                Intent intent = new Intent(context, PostDetailActivity.class);
+                // serialize the movie using parceler, use its short name as a key
+                intent.putExtra(Post.class.getSimpleName(), post);
+                // show the activity
+                context.startActivity(intent);
             }
         }
     }

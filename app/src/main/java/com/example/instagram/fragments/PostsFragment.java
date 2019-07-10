@@ -1,7 +1,6 @@
 package com.example.instagram.fragments;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,9 +47,7 @@ public class PostsFragment extends Fragment {
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                // Your code to refresh the list here.
-                // Make sure you call swipeContainer.setRefreshing(false)
-                // once the network request has completed successfully.
+                // refresh the list
                 fetchTimelineAsync(0);
             }
         });
@@ -64,7 +61,6 @@ public class PostsFragment extends Fragment {
         rvPosts.setAdapter(adapter);
         // set the layout manager on the recycler view
         rvPosts.setLayoutManager(new LinearLayoutManager(getContext()));
-//        linearLayoutManager.setReverseLayout(true);
         loadTopPosts();
     }
 
@@ -78,11 +74,11 @@ public class PostsFragment extends Fragment {
                     mPosts.addAll(posts);
                     adapter.notifyDataSetChanged();
 
-                    for (int i = 0; i < posts.size(); i++) {
-                        Log.d("HomeActivity", "Post[" + i + "] = "
-                                + posts.get(i).getDescription()
-                                + "\nusername = " + posts.get(i).getUser().getUsername());
-                    }
+//                    for (int i = 0; i < posts.size(); i++) {
+//                        Log.d("HomeActivity", "Post[" + i + "] = "
+//                                + posts.get(i).getDescription()
+//                                + "\nusername = " + posts.get(i).getUser().getUsername());
+//                    }
                 }
                 else {
                     e.printStackTrace();

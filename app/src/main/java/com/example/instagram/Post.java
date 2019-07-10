@@ -8,7 +8,6 @@ import com.parse.ParseUser;
 
 
 @ParseClassName("Post")
-//@Parcel
 public class Post extends ParseObject {
 
 //    public Post() {}
