@@ -1,6 +1,7 @@
 package com.example.instagram;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +44,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         return posts.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView tvHandle;
         private ImageView ivImage;
@@ -55,6 +56,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             tvHandle = itemView.findViewById(R.id.tvHandle);
             ivImage = itemView.findViewById(R.id.ivImage);
             tvDescription = itemView.findViewById(R.id.tvDescription);
+            itemView.setOnClickListener(this);
         }
 
 
@@ -67,5 +69,40 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             }
             tvDescription.setText(post.getDescription());
         }
+
+
+        @Override
+        public void onClick(View view) {
+            // gets item position
+            int position = getAdapterPosition();
+            // make sure the position is valid, i.e. actually exists in the view
+            if (position != RecyclerView.NO_POSITION) {
+                // get the movie at the position, this won't work if the class is static
+                Post post = posts.get(position);
+                // create intent for the new activity
+//                Intent intent = new Intent(context, PostDetailActivity.class);
+//                // serialize the movie using parceler, use its short name as a key
+//                intent.putExtra(Movie.class.getSimpleName(), Parcels.wrap(post));
+//                // show the activity
+//                context.startActivity(intent);
+                Intent sendPostDetails = new Intent(context, PostDetailActivity.class);
+                sendPostDetails.putExtra("username", post.getUser().getUsername());
+                sendPostDetails.putExtra("createdAt", post.getCreatedAt().toString());
+                sendPostDetails.putExtra("description", post.getDescription());
+                context.startActivity(sendPostDetails);
+            }
+        }
+    }
+
+    // Clean all elements of the recycler
+    public void clear() {
+        posts.clear();
+        notifyDataSetChanged();
+    }
+
+    // Add a list of items -- change to type used
+    public void addAll(List<Post> list) {
+        posts.addAll(list);
+        notifyDataSetChanged();
     }
 }

@@ -8,21 +8,20 @@
 
     <EditText
         android:id="@+id/etDescription"
-        android:layout_width="395dp"
-        android:layout_height="wrap_content"
+        android:layout_width="396dp"
+        android:layout_height="107dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:ems="10"
         android:hint="Enter a description"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/btnTakePic"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/ivImagePost" />
 
     <Button
         android:id="@+id/btnCreate"
@@ -30,27 +29,12 @@
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="35dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:text="CREATE"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivImagePost" />
-
-    <Button
-        android:id="@+id/btnTakePic"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:text="TAKE PICTURE"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etDescription" />
 
@@ -58,11 +42,15 @@
         android:id="@+id/ivImagePost"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="62dp"
+        android:layout_marginLeft="62dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="62dp"
+        android:layout_marginRight="62dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnTakePic"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:color/black" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

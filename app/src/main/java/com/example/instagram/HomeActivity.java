@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.example.instagram.fragments.ComposeFragment;
 import com.example.instagram.fragments.PostsFragment;
+import com.example.instagram.fragments.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -50,8 +51,7 @@ public class HomeActivity extends AppCompatActivity {
                         Toast.makeText(HomeActivity.this, "Compose!", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.action_profile:
-                        // TODO - swap fragment here
-                        fragment = new ComposeFragment();
+                        fragment = new ProfileFragment();
                         Toast.makeText(HomeActivity.this, "Profile!", Toast.LENGTH_SHORT).show();
                         break;
                 }

@@ -42,7 +42,6 @@ public class ComposeFragment extends Fragment {
 
     private EditText etDescription;
     private Button btnCreate;
-    private Button btnTakePic;
     private ImageView ivImagePost;
 
     public final String APP_TAG = "MyCustomApp";
@@ -68,15 +67,9 @@ public class ComposeFragment extends Fragment {
 
         etDescription = view.findViewById(R.id.etDescription);
         btnCreate = view.findViewById(R.id.btnCreate);
-        btnTakePic = view.findViewById(R.id.btnTakePic);
         ivImagePost = view.findViewById(R.id.ivImagePost);
 
-        btnTakePic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onLaunchCamera(view);
-            }
-        });
+        onLaunchCamera(view);
 
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -180,6 +173,7 @@ public class ComposeFragment extends Fragment {
                 if (e == null) {
                     Log.d("HomeActivity", "Create post success!");
                     etDescription.setText("");
+                    ivImagePost.setImageResource(0);
                 }
                 else {
                     e.printStackTrace();
