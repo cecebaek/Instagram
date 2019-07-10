@@ -65,6 +65,7 @@ public class ComposeFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         etDescription = view.findViewById(R.id.etDescription);
         btnCreate = view.findViewById(R.id.btnCreate);
         btnTakePic = view.findViewById(R.id.btnTakePic);
@@ -186,5 +187,6 @@ public class ComposeFragment extends Fragment {
             }
         });
     }
+
 }
 

@@ -47,13 +47,14 @@ public class PostsFragment extends Fragment {
         // set the adapter on the recycler view
         rvPosts.setAdapter(adapter);
         // set the layout manager on the recycler view
-        rvPosts.setLayoutManager(new LinearLayoutManager((getContext() )));
+        rvPosts.setLayoutManager(new LinearLayoutManager(getContext()));
+//        linearLayoutManager.setReverseLayout(true);
         loadTopPosts();
     }
 
     private void loadTopPosts() {
         final Post.Query postQuery = new Post.Query();
-        postQuery.getTop().withUser();
+        postQuery.getTop().withUser().orderByDescending("createdAt");
         postQuery.findInBackground(new FindCallback<Post>() {
             @Override
             public void done(List<Post> posts, ParseException e) {
