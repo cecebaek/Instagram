@@ -1,7 +1,6 @@
 package com.example.instagram;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -13,16 +12,10 @@ import com.example.instagram.fragments.ComposeFragment;
 import com.example.instagram.fragments.PostsFragment;
 import com.example.instagram.fragments.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.parse.FindCallback;
-import com.parse.ParseException;
-
-import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private final String TAG = "MainActivity";
-
-    private BottomNavigationView bottomNavigationView;
+    private BottomNavigationView mBottomNavigationView;
 
     Fragment fragment;
 
@@ -35,8 +28,8 @@ public class HomeActivity extends AppCompatActivity {
         // define your fragments here
 
         // handle bottom navigation selection
-        bottomNavigationView = findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        mBottomNavigationView = findViewById(R.id.bottom_navigation);
+        mBottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
@@ -55,28 +48,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
         // Set default selection
-        bottomNavigationView.setSelectedItemId(R.id.action_home);
-//        loadTopPosts();
-    }
-
-    private void loadTopPosts() {
-        final Post.Query postQuery = new Post.Query();
-        postQuery.getTop().withUser();
-        postQuery.findInBackground(new FindCallback<Post>() {
-            @Override
-            public void done(List<Post> objects, ParseException e) {
-                if (e == null) {
-                    for (int i = 0; i < objects.size(); i++) {
-                        Log.d("HomeActivity", "Post[" + i + "] = "
-                                + objects.get(i).getDescription()
-                                + "\nusername = " + objects.get(i).getUser().getUsername());
-                    }
-                }
-                else {
-                    e.printStackTrace();
-                }
-            }
-        });
+        mBottomNavigationView.setSelectedItemId(R.id.action_home);
     }
 
 }

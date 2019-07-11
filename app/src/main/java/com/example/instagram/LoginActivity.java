@@ -17,10 +17,10 @@ import com.parse.SignUpCallback;
 public class LoginActivity extends AppCompatActivity {
 
     // log in view objects
-    private EditText usernameInput;
-    private EditText passwordInput;
-    private Button loginBtn;
-    private Button signupBtn;
+    private EditText mUsername;
+    private EditText mPassword;
+    private Button mLoginButton;
+    private Button mSignupButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,27 +28,27 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         // resolve the view objects
-        usernameInput = findViewById(R.id.etUsername);
-        passwordInput = findViewById(R.id.etPassword);
-        loginBtn = findViewById(R.id.btnLogin);
-        signupBtn = findViewById(R.id.btnSignup);
+        mUsername = findViewById(R.id.etUsername);
+        mPassword = findViewById(R.id.etPassword);
+        mLoginButton = findViewById(R.id.btnLogin);
+        mSignupButton = findViewById(R.id.btnSignup);
 
         // set up on click listener for the log in button
-        loginBtn.setOnClickListener(new View.OnClickListener() {
+        mLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final String username = usernameInput.getText().toString();
-                final String password = passwordInput.getText().toString();
+                final String username = mUsername.getText().toString();
+                final String password = mPassword.getText().toString();
                 login(username, password);
             }
         });
 
         // set up on click listener for the log in button
-        signupBtn.setOnClickListener(new View.OnClickListener() {
+        mSignupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final String username = usernameInput.getText().toString();
-                final String password = passwordInput.getText().toString();
+                final String username = mUsername.getText().toString();
+                final String password = mPassword.getText().toString();
                 signup(username, password);
             }
         });

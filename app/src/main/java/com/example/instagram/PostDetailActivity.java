@@ -10,13 +10,13 @@ import com.bumptech.glide.Glide;
 
 public class PostDetailActivity extends AppCompatActivity {
 
-    Post post;
+    Post mPost;
     String imageUrl;
 
-    TextView tvUsername;
-    TextView tvCreatedAt;
-    ImageView ivImagePost;
-    TextView tvDescription;
+    TextView mUsername;
+    TextView mCreatedAt;
+    ImageView mImagePost;
+    TextView mDescription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,22 +24,22 @@ public class PostDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_post_detail);
 
         // resolve the view object
-        tvUsername = findViewById(R.id.tvUsername);
-        tvCreatedAt = findViewById(R.id.tvCreatedAt);
-        ivImagePost = findViewById(R.id.ivImagePost);
-        tvDescription = findViewById(R.id.tvDescription);
+        mUsername = findViewById(R.id.tvUsername);
+        mCreatedAt = findViewById(R.id.tvCreatedAt);
+        mImagePost = findViewById(R.id.ivImagePost);
+        mDescription = findViewById(R.id.tvDescription);
 
         // unwrap the post passed in via intent, using its simple name as a key
-        post = (Post) getIntent().getParcelableExtra(Post.class.getSimpleName());
+        mPost = (Post) getIntent().getParcelableExtra(Post.class.getSimpleName());
         // set variables with content from post
-        tvUsername.setText(post.getUser().getUsername());
-        tvCreatedAt.setText(post.getCreatedAt().toString());
-        tvDescription.setText(post.getDescription());
-        imageUrl = post.getImage().getUrl();
+        mUsername.setText(mPost.getUser().getUsername());
+        mCreatedAt.setText(mPost.getCreatedAt().toString());
+        mDescription.setText(mPost.getDescription());
+        imageUrl = mPost.getImage().getUrl();
 
         // load image using glide
         Glide.with(this)
                 .load(imageUrl)
-                .into(ivImagePost);
+                .into(mImagePost);
     }
 }

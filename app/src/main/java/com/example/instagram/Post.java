@@ -10,8 +10,6 @@ import com.parse.ParseUser;
 @ParseClassName("Post")
 public class Post extends ParseObject {
 
-//    public Post() {}
-
     public static final String KEY_DESCRIPTION = "description";
     public static final String KEY_IMAGE = "image";
     public static final String KEY_USER = "user";
@@ -40,7 +38,6 @@ public class Post extends ParseObject {
         put(KEY_USER, user);
     }
 
-
     // Class to query post models
     public static class Query extends ParseQuery<Post> {
         public Query() {
@@ -56,8 +53,5 @@ public class Post extends ParseObject {
             include("user");
             return this;
         }
-
     }
-
-
 }

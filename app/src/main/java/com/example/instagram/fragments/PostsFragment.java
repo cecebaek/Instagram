@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.example.instagram.EndlessRecyclerViewScrollListener;
 import com.example.instagram.Post;
 import com.example.instagram.PostsAdapter;
 import com.example.instagram.R;
@@ -23,10 +24,12 @@ public class PostsFragment extends Fragment {
 
     public static final String TAG = "PostsFragment";
 
-    private SwipeRefreshLayout swipeContainer;
+    private SwipeRefreshLayout mSwipeContainer;
+    private EndlessRecyclerViewScrollListener scrollListener;
+    private LinearLayoutManager linearLayoutManager;
 
-    private RecyclerView rvPosts;
-    private PostsAdapter adapter;
+    private RecyclerView mPostsRecyclerView;
+    private PostsAdapter mPostsAdapter;
     private List<Post> mPosts;
 
     // The onCreateView method is called when Fragment should create its View object hierarchy,
@@ -42,9 +45,9 @@ public class PostsFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // Lookup the swipe container view
-        swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
+        mSwipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
         // Setup refresh listener which triggers new data loading
-        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        mSwipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 // refresh the list
@@ -52,33 +55,42 @@ public class PostsFragment extends Fragment {
             }
         });
 
-        rvPosts = view.findViewById(R.id.rvPosts);
+        mPostsRecyclerView = view.findViewById(R.id.rvPosts);
         // create the adapter
         mPosts = new ArrayList<Post>();
         // create the data source
-        adapter = new PostsAdapter(getContext(), mPosts);
+        mPostsAdapter = new PostsAdapter(getContext(), mPosts);
         // set the adapter on the recycler view
-        rvPosts.setAdapter(adapter);
+        mPostsRecyclerView.setAdapter(mPostsAdapter);
         // set the layout manager on the recycler view
-        rvPosts.setLayoutManager(new LinearLayoutManager(getContext()));
-        loadTopPosts();
+        linearLayoutManager = new LinearLayoutManager(getContext());
+        mPostsRecyclerView.setLayoutManager(linearLayoutManager);
+        // load posts
+        loadTopPosts(0);
+        // Retain an instance so that you can call `resetState()` for fresh searches
+        scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                // Triggered only when new data needs to be appended to the list
+                // Add whatever code is needed to append new items to the bottom of the list
+                loadTopPosts(page);
+            }
+        };
+        // Adds the scroll listener to RecyclerView
+        mPostsRecyclerView.addOnScrollListener(scrollListener);
     }
 
-    private void loadTopPosts() {
+    private void loadTopPosts(int page) {
         final Post.Query postQuery = new Post.Query();
+        postQuery.setLimit(20);
+        postQuery.setSkip(20*page);
         postQuery.getTop().withUser().orderByDescending("createdAt");
         postQuery.findInBackground(new FindCallback<Post>() {
             @Override
             public void done(List<Post> posts, ParseException e) {
                 if (e == null) {
                     mPosts.addAll(posts);
-                    adapter.notifyDataSetChanged();
-
-//                    for (int i = 0; i < posts.size(); i++) {
-//                        Log.d("HomeActivity", "Post[" + i + "] = "
-//                                + posts.get(i).getDescription()
-//                                + "\nusername = " + posts.get(i).getUser().getUsername());
-//                    }
+                    mPostsAdapter.notifyDataSetChanged();
                 }
                 else {
                     e.printStackTrace();
@@ -91,9 +103,8 @@ public class PostsFragment extends Fragment {
         // Send the network request to fetch the updated data
         // `client` here is an instance of Android Async HTTP
         // getHomeTimeline is an example endpoint.
-        adapter.clear();
-        loadTopPosts();
-        swipeContainer.setRefreshing(false);
+        mPostsAdapter.clear();
+        loadTopPosts(page);
+        mSwipeContainer.setRefreshing(false);
     }
-
 }
