@@ -3,7 +3,6 @@ package com.example.instagram;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,11 +29,10 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_home);
 
         final FragmentManager fragmentManager = getSupportFragmentManager();
         // define your fragments here
-
 
         // handle bottom navigation selection
         bottomNavigationView = findViewById(R.id.bottom_navigation);
@@ -44,15 +42,12 @@ public class HomeActivity extends AppCompatActivity {
                 switch (menuItem.getItemId()) {
                     case R.id.action_home:
                         fragment = new PostsFragment();
-                        Toast.makeText(HomeActivity.this, "Home!", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.action_compose:
                         fragment = new ComposeFragment();
-                        Toast.makeText(HomeActivity.this, "Compose!", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.action_profile:
                         fragment = new ProfileFragment();
-                        Toast.makeText(HomeActivity.this, "Profile!", Toast.LENGTH_SHORT).show();
                         break;
                 }
                 fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
