@@ -32,11 +32,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivImagePost"
+        app:layout_constraintTop_toBottomOf="@+id/image_post_imageview"
         android:autofillHints="" />
 
     <Button
-        android:id="@+id/btnCreate"
+        android:id="@+id/create_button"
         android:layout_width="395dp"
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
@@ -51,7 +51,7 @@
         app:layout_constraintTop_toBottomOf="@+id/take_picture_button" />
 
     <ImageView
-        android:id="@+id/ivImagePost"
+        android:id="@+id/image_post_imageview"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_marginStart="62dp"
@@ -64,7 +64,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:color/black"
-        android:contentDescription="TODO" />
+        android:contentDescription="@string/todo" />
 
     <Button
         android:id="@+id/take_picture_button"
@@ -75,7 +75,7 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:text="TAKE PICTURE"
+        android:text="@string/take_picture"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/description_edittext" />

@@ -38,16 +38,16 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         mParseUser = ParseUser.getCurrentUser();
 
-        mLogoutButton = view.findViewById(R.id.mLogoutButton);
-        mUsername = view.findViewById(R.id.tvUsername);
-        mProfileImage = view.findViewById(R.id.ivProfilePic);
+        mLogoutButton = view.findViewById(R.id.logout_button);
+        mUsername = view.findViewById(R.id.username_textview);
+        mProfileImage = view.findViewById(R.id.profilepic_imageview);
 
         mUsername.setText(mParseUser.getUsername());
 
 //        imageUrl = mParseUser.getParseFile("profilePic").getUrl();
         // load image using glide
 //        Glide.with(this)
-//                .load(ParseUser.getCurrentUser().getParseFile("profilePic").getUrl())
+//                .load(ParseUser.getCurrebbjlibvrdltdhiellufvfdiirrbtkvgentUser().getParseFile("profilePic").getUrl())
 //                .into(mProfileImage);
 
         // set onClick Listener for Logout button

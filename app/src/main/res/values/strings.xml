@@ -2,4 +2,6 @@
     <string name="app_name">Instagram</string>
     <string name="enter_a_description">Enter a description</string>
     <string name="create">CREATE</string>
+    <string name="take_picture">TAKE PICTURE</string>
+    <string name="todo">TODO</string>
 </resources>

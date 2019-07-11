@@ -55,7 +55,7 @@ public class PostsFragment extends Fragment {
             }
         });
 
-        mPostsRecyclerView = view.findViewById(R.id.rvPosts);
+        mPostsRecyclerView = view.findViewById(R.id.posts_recyclerview);
         // create the adapter
         mPosts = new ArrayList<Post>();
         // create the data source

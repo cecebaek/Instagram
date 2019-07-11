@@ -6,6 +6,7 @@ import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -54,27 +55,58 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         private ImageView ivImage;
         private TextView tvDescription;
         private TextView tvCreatedAt;
+        private ImageButton mLikeButton;
+        private TextView mLikeCount;
 
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvHandle = itemView.findViewById(R.id.tvHandle);
-            ivImage = itemView.findViewById(R.id.ivImage);
-            tvDescription = itemView.findViewById(R.id.tvDescription);
-            tvCreatedAt = itemView.findViewById(R.id.tvCreatedAt);
+            tvHandle = itemView.findViewById(R.id.handle_textview);
+            ivImage = itemView.findViewById(R.id.image_imageview);
+            tvDescription = itemView.findViewById(R.id.description_edittext);
+            tvCreatedAt = itemView.findViewById(R.id.createdat_textview);
+            mLikeButton = itemView.findViewById(R.id.like_button);
+            mLikeCount = itemView.findViewById(R.id.like_count_textview);
+
             itemView.setOnClickListener(this);
         }
 
 
         // binds the view elements to the post
-        public void bind(Post post) {
+        public void bind(final Post post) {
             tvHandle.setText(post.getUser().getUsername());
+            tvDescription.setText(post.getDescription());
+            tvCreatedAt.setText(getRelativeTimeAgo(post.getCreatedAt().toString()));
+            mLikeCount.setText(String.valueOf(post.getNumLikes()));
+            if (post.isLiked()) {
+                mLikeButton.setImageResource(R.drawable.ufi_heart_active);
+            }
+            else {
+                mLikeButton.setImageResource(R.drawable.ufi_heart);
+            }
+
             ParseFile image = post.getImage();
             if (image != null) {
                 Glide.with(context).load(image.getUrl()).into(ivImage);
             }
-            tvDescription.setText(post.getDescription());
-            tvCreatedAt.setText(getRelativeTimeAgo(post.getCreatedAt().toString()));
+
+            mLikeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (!post.isLiked()) {
+                        // like
+                        post.likePost();
+                        mLikeButton.setImageResource(R.drawable.ufi_heart_active);
+                    }
+                    else {
+                        // unlike
+                        post.unlikePost();
+                        mLikeButton.setImageResource(R.drawable.ufi_heart);
+                    }
+                    post.saveInBackground();
+                    mLikeCount.setText(String.valueOf(post.getNumLikes()));
+                }
+            });
         }
 
 

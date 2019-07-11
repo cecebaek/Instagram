@@ -66,9 +66,9 @@ public class ComposeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         // set views
         mDescription = view.findViewById(R.id.description_edittext);
-        mCreateButton = view.findViewById(R.id.btnCreate);
+        mCreateButton = view.findViewById(R.id.create_button);
         mTakePicButton = view.findViewById(R.id.take_picture_button);
-        mImagePost = view.findViewById(R.id.ivImagePost);
+        mImagePost = view.findViewById(R.id.image_post_imageview);
         // set progress bar
         pb = (ProgressBar) view.findViewById(R.id.loading_progressbar);
         // set on click listener for create post button
