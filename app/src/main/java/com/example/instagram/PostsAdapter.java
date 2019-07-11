@@ -51,20 +51,20 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private TextView tvHandle;
-        private ImageView ivImage;
-        private TextView tvDescription;
-        private TextView tvCreatedAt;
+        private TextView mHandle;
+        private ImageView mImage;
+        private TextView mDescription;
+        private TextView mCreatedAt;
         private ImageButton mLikeButton;
         private TextView mLikeCount;
 
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvHandle = itemView.findViewById(R.id.handle_textview);
-            ivImage = itemView.findViewById(R.id.image_imageview);
-            tvDescription = itemView.findViewById(R.id.description_edittext);
-            tvCreatedAt = itemView.findViewById(R.id.createdat_textview);
+            mHandle = itemView.findViewById(R.id.handle_textview);
+            mImage = itemView.findViewById(R.id.image_imageview);
+            mDescription = itemView.findViewById(R.id.description_edittext);
+            mCreatedAt = itemView.findViewById(R.id.createdat_textview);
             mLikeButton = itemView.findViewById(R.id.like_button);
             mLikeCount = itemView.findViewById(R.id.like_count_textview);
 
@@ -74,9 +74,9 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
         // binds the view elements to the post
         public void bind(final Post post) {
-            tvHandle.setText(post.getUser().getUsername());
-            tvDescription.setText(post.getDescription());
-            tvCreatedAt.setText(getRelativeTimeAgo(post.getCreatedAt().toString()));
+            mHandle.setText(post.getUser().getUsername());
+            mDescription.setText(post.getDescription());
+            mCreatedAt.setText(getRelativeTimeAgo(post.getCreatedAt().toString()));
             mLikeCount.setText(String.valueOf(post.getNumLikes()));
             if (post.isLiked()) {
                 mLikeButton.setImageResource(R.drawable.ufi_heart_active);
@@ -87,7 +87,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
             ParseFile image = post.getImage();
             if (image != null) {
-                Glide.with(context).load(image.getUrl()).into(ivImage);
+                Glide.with(context).load(image.getUrl()).into(mImage);
             }
 
             mLikeButton.setOnClickListener(new View.OnClickListener() {
